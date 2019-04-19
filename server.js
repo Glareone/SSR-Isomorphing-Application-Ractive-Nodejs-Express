@@ -14,10 +14,18 @@ const config = require('./config/common');
 
 const server = express();
 
+// Несколько ключевых настроек для нашей печеньки — всегда следует выставлять httpOnly и sameSite. При переходе на SSL,
+// можно будет активировать еще и secure (кука будет отправляться только при работе через https).
+// Добавляем этот модуль в файл веб-сервера:
+const session = require('express-session');
+
 server.engine('html', cons.mustache);
 server.set('view engine', 'html');
 
 server.use(helmet());
+
+// Использование сессий, которые мы подключили через express-session
+server.use(session(config.session));
 
 // Так как мы планируем работать не только с GET-запросами, но и со всеми возможными REST-глаголами (POST/PUT/DELETE),
 // а также выполнять запросы без JS на клиенте (т.е. по средствам html-форм), необходимо также внести парочку
