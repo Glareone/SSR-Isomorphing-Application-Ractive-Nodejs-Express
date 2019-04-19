@@ -8,7 +8,14 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "parse": "node ./tools/template-parser.js",
+    "debug": "npm run parse && env NODE_ENV=development ./node_modules/.bin/webpack --display-error-details",
+    "build": "npm run parse && env NODE_ENV=production ./node_modules/.bin/webpack --display-error-details",
+    "dev": "node server.js",
     "start": "node server.js"
+  },
+  "config": {
+    "port": "8080"
   },
   "repository": {
     "type": "git",
@@ -21,14 +28,43 @@
   },
   "homepage": "https://github.com/Glareone/IsomorfApp-React-Redux-Nodejs-Express#readme",
   "dependencies": {
-    "compression": "^1.7.4",
-    "consolidate": "^0.15.1",
-    "express": "^4.16.4",
-    "express-http-proxy": "^1.5.1",
-    "express-session": "^1.16.1",
-    "helmet": "^3.16.0",
-    "method-override": "^3.0.0",
-    "mustache": "^3.0.1",
-    "ractive": "^1.3.3"
+    "axios": "^0.18.0",
+    "compression": "^1.7.1",
+    "consolidate": "^0.15.0",
+    "express": "^4.16.2",
+    "express-http-proxy": "^1.1.0",
+    "express-session": "^1.15.6",
+    "helmet": "^3.9.0",
+    "method-override": "^2.3.10",
+    "mustache": "^2.3.0",
+    "ractive": "edge",
+    "ractive-events-keys": "^0.2.1",
+    "ractive-page": "https://github.com/ractivejs-developers/ractive-page.git",
+    "ractive-ready": "https://github.com/ractivejs-developers/ractive-ready.git",
+    "ractive-transitions-fade": "^0.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^8.0.2",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "compression-webpack-plugin": "^1.0.1",
+    "copy-webpack-plugin": "^4.2.1",
+    "expose-loader": "^0.7.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "glob": "^7.1.2",
+    "html-webpack-plugin": "^2.30.1",
+    "serialize-javascript": "^1.4.0",
+    "uglify-js": "^3.1.10",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "2.9.1",
+    "webpack-dev-server": "^2.9.5",
+    "webpack-manifest-plugin": "^1.3.2",
+    "webpack-md5-hash": "^0.0.5",
+    "webpack-runtime-analyzer": "^1.5.0",
+    "wrapper-webpack-plugin": "^1.0.0"
   }
 }

@@ -19,5 +19,5 @@ module.exports = () => (req, res, next) => {
   app.teardown();
   // и рендерю серверный шаблон "./views/index.html" с полученными значениями, одновременно отправляя ответ.
   // Вот и весь великий и ужасный SSR.
-  res.render('index', { meta, content, styles });
+  res.render('_index', { meta, content, styles });
 };

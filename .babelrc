@@ -1,14 +1,5 @@
 {
   "presets": [
-    "react"
-  ],
-  "plugins": [
-    "babel-plugin-transform-object-rest-spread",
-    "transform-class-properties"
-  ],
-  "env": {
-    "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
-    }
-  }
+    ["es2015", { "modules": false }]
+  ]
 }
