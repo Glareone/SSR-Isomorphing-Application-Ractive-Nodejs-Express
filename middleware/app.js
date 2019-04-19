@@ -9,19 +9,15 @@ module.exports = () => (req, res, next) => {
 
   const app = run();
 
-  app.ready((error, data) => {
-    const meta = { title: 'Hello world', description: '', keywords: '' },
-      // app.toHTML() — рендерит текущее состояние приложения в строку;
-      content = app.toHTML(),
-      // app.toCSS() — собирает все «component specific» стили, уже разбитые по неймспейсам и также возвращает их строкой
-      styles = app.toCSS();
+  const meta = { title: 'Hello world', description: '', keywords: '' },
+    // app.toHTML() — рендерит текущее состояние приложения в строку;
+    content = app.toHTML(),
+    // app.toCSS() — собирает все «component specific» стили, уже разбитые по неймспейсам и также возвращает их строкой
+    styles = app.toCSS();
 
-    // Далее, я уничтожаю текущий инстанс приложения вызовом метода teardown()
-    app.teardown();
-
-    data = JSON.stringify(data || {});
-    error = error && error.message ? error.message : error;
-
-    res.render('index', { meta, content, styles, data, error });
-  });
+  // Далее, я уничтожаю текущий инстанс приложения вызовом метода teardown()
+  app.teardown();
+  // и рендерю серверный шаблон "./views/index.html" с полученными значениями, одновременно отправляя ответ.
+  // Вот и весь великий и ужасный SSR.
+  res.render('_index', { meta, content, styles });
 };
