@@ -1,23 +1,23 @@
 const express = require('express'),
   helmet = require('helmet'),
   compress = require('compression'),
-  cons = require('consolidate');
+  cons = require('consolidate'),
+  methodOverride = require('method-override'),
+  // Несколько ключевых настроек для нашей печеньки — всегда следует выставлять httpOnly и sameSite.
+  // При переходе на SSL, можно будет активировать еще и secure (кука будет отправляться только при работе через https)
+  // Добавляем этот модуль в файл веб-сервера:
+  session = require('express-session');
 
 const app = require('./middleware/app'),
   api = require('./middleware/api'),
   req = require('./middleware/req'),
   err = require('./middleware/err');
 
-const methodOverride = require('method-override');
-
 const config = require('./config/common');
 
 const server = express();
 
-// Несколько ключевых настроек для нашей печеньки — всегда следует выставлять httpOnly и sameSite. При переходе на SSL,
-// можно будет активировать еще и secure (кука будет отправляться только при работе через https).
-// Добавляем этот модуль в файл веб-сервера:
-const session = require('express-session');
+server.enable('trust proxy');
 
 server.engine('html', cons.mustache);
 server.set('view engine', 'html');
@@ -44,7 +44,5 @@ server.all('/api/*', api());
 
 server.use(app());
 server.use(err());
-
-
 
 server.listen(config.port);
