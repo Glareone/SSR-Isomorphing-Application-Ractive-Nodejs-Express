@@ -1,0 +1,29 @@
+{
+  "name": "React Redux Isomorf Application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glareone/IsomorfApp-React-Redux-Nodejs-Express.git"
+  },
+  "author": "Aliaksei Kalesnikau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Glareone/IsomorfApp-React-Redux-Nodejs-Express/issues"
+  },
+  "homepage": "https://github.com/Glareone/IsomorfApp-React-Redux-Nodejs-Express#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "consolidate": "^0.15.1",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0"
+  }
+}
