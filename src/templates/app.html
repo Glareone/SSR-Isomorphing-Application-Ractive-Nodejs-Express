@@ -6,17 +6,17 @@
         Требуется регистрация в app.js -->
     {{>navbar}}
 
-    {{#with @shared.$route as $route }}
+    {{#with @shared.$route.pathname as pathname }}
 
-    {{#if $route.match('/login')}}
+    {{#if pathname.match('/login')}}
     <div fade-in-out>
         <div class="alert alert-info"><strong>Login</strong>. {{message}}</div>
     </div>
-    {{elseif $route.match('/register')}}
-    <div fade-in-out>
+    {{elseif pathname.match('/register')}}
+    <div>
         <div class="alert alert-info"><strong>Register</strong>. {{message}}</div>
     </div>
-    {{elseif $route.match('/')}}
+    {{elseif pathname.match('/')}}
     <div fade-in-out>
         <div class="alert alert-info">
             <strong>Hello, {{fullName}}!</strong> You successfully read please <a href="/login" class="alert-link">login</a>.

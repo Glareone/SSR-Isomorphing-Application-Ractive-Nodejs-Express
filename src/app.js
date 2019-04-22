@@ -48,10 +48,10 @@ Ractive.use(require('ractive-page')({
 
 const options = {
   el: '#app',
-  template: require('./templates/app.html'),
+  template: require('./templates/parsed/app'),
   partials: {
-    navbar: require('./templates/navbar.html'),
-    footer: require('./templates/footer.html')
+    navbar: require('./templates/parsed/navbar'),
+    footer: require('./templates/parsed/footer')
   },
   transitions: {
     fade: require('ractive-transitions-fade'),

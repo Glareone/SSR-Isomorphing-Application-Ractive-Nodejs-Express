@@ -9,3 +9,8 @@ For more information on how to this works with other frontends/backends, head ov
 ### To start application:
 1. npm install
 2. npm start
+
+### To parse templates (app.html, footer.html, navbar.html)
+1. npm run parse
+
+In 'src/templates/parsed' folder you will find those parsed templates
