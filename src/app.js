@@ -41,13 +41,25 @@ Ractive.defaults.sanitize = true;
 // Если вы ненавидите или боитесь двойного связывания, данная проблема решается в Ractive одной строкой:
 // Ractive.defaults.twoway = false;
 
+// Подключение роутинга для изоморфного приложения
+Ractive.use(require('ractive-page')({
+  meta: require('../config/meta.json')
+}));
+
 const options = {
   el: '#app',
-  template: `<div id="msg">Static text! + {{message}} + {{fullName}}</div>`,
+  template: require('./templates/parsed/app'),
+  partials: {
+    navbar: require('./templates/parsed/navbar'),
+    footer: require('./templates/parsed/footer')
+  },
+  transitions: {
+    fade: require('ractive-transitions-fade'),
+  },
   data: {
     message: 'Hello world',
-    firstName: 'Habr',
-    lastName: 'User'
+    firstName: 'Aliasksei',
+    lastName: 'Kalesnikau'
   },
   computed: {
     fullName() {

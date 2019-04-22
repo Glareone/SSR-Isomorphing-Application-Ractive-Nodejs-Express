@@ -9,8 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "parse": "node ./tools/template-parser.js",
-    "debug": "npm run parse && env NODE_ENV=development ./node_modules/.bin/webpack --display-error-details",
-    "build": "npm run parse && env NODE_ENV=production ./node_modules/.bin/webpack --display-error-details",
+    "debug": "npm run parse && SET NODE_ENV=development ./node_modules/.bin/webpack --display-error-details",
+    "build": "npm run parse && SET NODE_ENV=production ./node_modules/.bin/webpack --display-error-details",
     "dev": "node server.js",
     "start": "node server.js"
   },

@@ -1,0 +1,34 @@
+<div id="page">
+    <!-- Давайте теперь используем наш роутер, чтобы создать несколько страниц.
+        Для этого создадим основной шаблон приложения (app.html) и partials для шапки (navbar.html)
+        и подвала (footer.html).
+        Для этого просто скопируем туда готовую разметку из спецификации RealWorld и добавим немного динамики
+        Требуется регистрация в app.js -->
+    {{>navbar}}
+
+    {{#with @shared.$route.pathname as pathname }}
+
+    {{#if pathname.match('/login')}}
+    <div fade-in-out>
+        <div class="alert alert-info"><strong>Login</strong>. {{message}}</div>
+    </div>
+    {{elseif pathname.match('/register')}}
+    <div>
+        <div class="alert alert-info"><strong>Register</strong>. {{message}}</div>
+    </div>
+    {{elseif pathname.match('/')}}
+    <div fade-in-out>
+        <div class="alert alert-info">
+            <strong>Hello, {{fullName}}!</strong> You successfully read please <a href="/login" class="alert-link">login</a>.
+        </div>
+    </div>
+    {{else}}
+    <div fade-in-out>
+        <p>404 page</p>
+    </div>
+    {{/if}}
+
+    {{/with}}
+
+    {{>footer}}
+</div>
