@@ -1,3 +1,5 @@
+// Root component
+
 const Ractive = require('ractive');
 const api = require('./services/api');
 
@@ -73,7 +75,9 @@ const options = {
   template: require('./templates/parsed/app'),
   partials: {
     navbar: require('./templates/parsed/navbar'),
-    footer: require('./templates/parsed/footer')
+    footer: require('./templates/parsed/footer'),
+    homepage: require('./templates/homepage.html'),
+    notfound: require('./templates/notfound.html')
   },
   transitions: {
     fade: require('ractive-transitions-fade'),

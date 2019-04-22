@@ -6,55 +6,32 @@
         Требуется регистрация в app.js -->
     {{>navbar}}
 
+    <!-- shared позволяет передавать объекты между компонентами и шаблонами, в данном случае передает route-->
     {{#with @shared.$route.pathname as pathname }}
 
     {{#if pathname.match('/login')}}
-    <div fade-in-out>
-        <div class="alert alert-info"><strong>Login</strong>. {{message}}</div>
+    <div fade-in="fadeIn">
+        <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
+            <strong>Login</strong>. {{message}}
+        </div>
     </div>
     {{elseif pathname.match('/register')}}
-    <div>
-        <div class="alert alert-info"><strong>Register</strong>. {{message}}</div>
+    <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
+        Register page
+    </div>
+    {{elseif $route.match('/profile/:username/:section?') }}
+    <div class="profile-page" fade-in="fadeIn" fade-out="fadeOut">
+        Profile page
     </div>
     {{elseif pathname.match('/')}}
-    <div fade-in-out>
-        <div class="alert alert-info">
-            <strong>Hello, {{fullName}}!</strong>
-            Please <a href="/login" class="alert-link">login</a>.
-        </div>
-        <!-- Совсем недавно, Ractive научился нативно работать с промисами.
-        Раньше это было возможно только с помощью адаптора.
-        Иными словами, мы можем хранить в реактивных данных компонента промисы и резолвить их «по месту».
-         Это крайне удобно и позволяет сократить количество шаблонного кода
-         используем get данных: this.set('foo', fetchFoo()); А в шаблоне тогда {{#await foo}}
-         -->
-        {{#await articles}}
-            <div class="alert alert-light">Loading articles...</div>
-        {{then data}}
-        <div class="list-group">
-            <!-- Короче говоря, теперь данные будут загружаться на сервере, ожидаться, рендериться во время SSR,
-            приходить в структурированном виде на клиент, 
-            идентифицироваться и переиспользоваться без лишних запросов к API и с гидрацией разметки. -->
-            {{#each data.articles as article}}
-            <div class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ article.title }}</h5>
-                    <small>{{ formatDate(article.createdAt) }}</small>
-                </div>
-            </div>
-            {{else}}
-            <div class="list-group-item">No articles are here... yet.</div>
-            {{/each}}
-        </div>
-        {{catch errors}}
-        {{>errors}}
-        {{/await}}
+    <div class="home-page" fade-in="fadeIn" fade-out="fadeOut">
+        {{>homepage}}
     </div>
     {{else}}
-    <div fade-in-out>
-        <p>404 page</p>
+    <div class="notfound-page" fade-in="fadeIn" fade-out="fadeOut">
+        {{>notfound}}
     </div>
     {{/if}}
-    {{/with}}
-    {{>footer}}
 </div>
+{{/with}}
+{{>footer}}

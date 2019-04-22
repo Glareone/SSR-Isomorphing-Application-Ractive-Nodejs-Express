@@ -1,0 +1,33 @@
+<div class="home-page" fade-in="fadeIn">
+    <div class="alert alert-info">
+        <strong>Hello, {{fullName}}!</strong>
+        Please <a href="/login" class="alert-link">login</a>.
+    </div>
+    <!-- Совсем недавно, Ractive научился нативно работать с промисами.
+    Раньше это было возможно только с помощью адаптора.
+    Иными словами, мы можем хранить в реактивных данных компонента промисы и резолвить их «по месту».
+     Это крайне удобно и позволяет сократить количество шаблонного кода
+     используем get данных: this.set('foo', fetchFoo()); А в шаблоне тогда {{#await foo}}
+     -->
+    {{#await articles}}
+    <div class="alert alert-light">Loading articles...</div>
+    {{then data}}
+    <div class="home-page" class="list-group">
+        <!-- Короче говоря, теперь данные будут загружаться на сервере, ожидаться, рендериться во время SSR,
+        приходить в структурированном виде на клиент,
+        идентифицироваться и переиспользоваться без лишних запросов к API и с гидрацией разметки. -->
+        {{#each data.articles as article}}
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ article.title }}</h5>
+                <small>{{ formatDate(article.createdAt) }}</small>
+            </div>
+        </div>
+        {{else}}
+        <div class="list-group-item">No articles are here... yet.</div>
+        {{/each}}
+    </div>
+    {{catch errors}}
+    {{>errors}}
+    {{/await}}
+</div>
