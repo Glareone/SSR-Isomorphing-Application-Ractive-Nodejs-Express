@@ -1,14 +1,17 @@
+<!-- Давайте теперь используем наш роутер, чтобы создать несколько страниц.
+    Для этого создадим основной шаблон приложения (app.html) и partials для шапки (navbar.html)
+    и подвала (footer.html).
+    Для этого просто скопируем туда готовую разметку из спецификации RealWorld и добавим немного динамики
+    Требуется регистрация в app.js -->
+{{>navbar}}
+<!-- shared позволяет передавать объекты между компонентами и шаблонами, в данном случае передает route-->
+{{#with
+@shared.$route.pathname as pathname,
+{delay: 500} as fadeIn,
+{delay: 200} as fadeOut
+}}
+
 <div id="page">
-    <!-- Давайте теперь используем наш роутер, чтобы создать несколько страниц.
-        Для этого создадим основной шаблон приложения (app.html) и partials для шапки (navbar.html)
-        и подвала (footer.html).
-        Для этого просто скопируем туда готовую разметку из спецификации RealWorld и добавим немного динамики
-        Требуется регистрация в app.js -->
-    {{>navbar}}
-
-    <!-- shared позволяет передавать объекты между компонентами и шаблонами, в данном случае передает route-->
-    {{#with @shared.$route.pathname as pathname }}
-
     {{#if pathname.match('/login')}}
     <div fade-in="fadeIn">
         <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
@@ -19,7 +22,7 @@
     <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
         Register page
     </div>
-    {{elseif $route.match('/profile/:username/:section?') }}
+    {{elseif pathname.match('/profile/:username/:section?') }}
     <div class="profile-page" fade-in="fadeIn" fade-out="fadeOut">
         Profile page
     </div>

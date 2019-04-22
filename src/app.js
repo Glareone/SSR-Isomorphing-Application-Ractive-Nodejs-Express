@@ -76,8 +76,8 @@ const options = {
   partials: {
     navbar: require('./templates/parsed/navbar'),
     footer: require('./templates/parsed/footer'),
-    homepage: require('./templates/homepage.html'),
-    notfound: require('./templates/notfound.html')
+    homepage: require('./templates/parsed/homepage'),
+    notfound: require('./templates/parsed/notfound')
   },
   transitions: {
     fade: require('ractive-transitions-fade'),
