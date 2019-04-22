@@ -8,12 +8,16 @@ const run = require('../src/app');
 module.exports = () => (req, res, next) => {
 
   const app = run();
+  // выставление текущего Url в роутер
+  const route = app.$page.show(req.url, null, true, false);
 
-  const meta = { title: 'Hello world', description: '', keywords: '' },
-    // app.toHTML() — рендерит текущее состояние приложения в строку;
-    content = app.toHTML(),
-    // app.toCSS() — собирает все «component specific» стили, уже разбитые по неймспейсам и также возвращает их строкой
-    styles = app.toCSS();
+  // подключение роутинга для изоморфного приложения (должен быть одинаковый роутинг для ноды и Ractive
+  // теперь роутинг становится полностью изоморфным
+  const meta = route.state.meta;
+  // app.toHTML() — рендерит текущее состояние приложения в строку;
+  const content = app.toHTML();
+  // app.toCSS() — собирает все «component specific» стили, уже разбитые по неймспейсам и также возвращает их строкой
+  const styles = app.toCSS();
 
   // Далее, я уничтожаю текущий инстанс приложения вызовом метода teardown()
   app.teardown();
