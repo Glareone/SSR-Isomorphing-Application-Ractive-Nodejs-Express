@@ -1,4 +1,5 @@
 const Ractive = require('ractive');
+const api = require('./services/api');
 
 // Ractive.DEBUG и Ractive.DEBUG_PROMISES с помощью которых мы включаем или выключаем информационные сообщения
 // об ошибках в зависимости от текущего окружения.
@@ -38,6 +39,12 @@ Ractive.defaults.lazy = true;
 // Ractive.defaults.sanitize позволяет на этапе парсинга шаблонов вырезать небезопасные html-теги.
 Ractive.defaults.sanitize = true;
 
+// Хелпер форматирования дат, добавлен в хелперы
+Ractive.defaults.data.formatDate = require('./helpers/formatDate');
+Ractive.defaults.data.errors = null;
+// Подключение паршиала ошибок
+Ractive.partials.errors = require('./templates/parsed/errors');
+
 // Если вы ненавидите или боитесь двойного связывания, данная проблема решается в Ractive одной строкой:
 // Ractive.defaults.twoway = false;
 
@@ -45,6 +52,21 @@ Ractive.defaults.sanitize = true;
 Ractive.use(require('ractive-page')({
   meta: require('../config/meta.json')
 }));
+
+// Используем плагин для добавления асинхронной загрузки на сервер и клиент. Для этого заюзаем плагин ractive-ready
+// Весь плагин еще примерно 100 строк кода, который заносит в прототип конструктора Ractive три дополнительных метода:
+// add async operation to "waitings"
+//   this.wait(promise[, key]);
+// callback when all "waitings" ready
+//   this.ready(callback);
+// return "keychain" of instance in components hierarchy
+//   this.keychain();
+// Используя эти методы, мы можем определить те асинхронные операции, ожидание которых является важной частью SSR.
+// А также получаем точку (функцию обратного вызова), в которой все данные, добавленные в «ожидания»,
+// гарантированно добыты.
+// Отдельно обращаю внимание, что данный подход дает возможность очевидным образом определять какие данные будут
+// участвовать в SSR, а какие нет. Иногда это удобно для оптимизации SSR.
+Ractive.use(require('ractive-ready')());
 
 const options = {
   el: '#app',
@@ -59,12 +81,31 @@ const options = {
   data: {
     message: 'Hello world',
     firstName: 'Aliasksei',
-    lastName: 'Kalesnikau'
+    lastName: 'Kalesnikau',
+    articles: [] // информация по статьям, которые мы забираем асинхронно сервером
   },
   computed: {
     fullName() {
       return this.get('firstName') + ' ' + this.get('lastName');
     }
+  },
+  // все там же импортируем api-сервис и пишем простой запрос на получение списка статей в хуке oninit и,
+  // внимание, добавляем «обещание» в «ожидание»
+  oninit () {
+    const key = 'articlesList';
+    // изменения необходимы для того, чтобы с сервера и с клиента не уходило 2 запроса.
+    // Короче говоря, теперь данные будут загружаться на сервере, ожидаться, рендериться во время SSR,
+    // приходить в структурированном виде на клиент,
+    // идентифицироваться и переиспользоваться без лишних запросов к API и с гидрацией разметки.
+    let articles = this.get(`@global.__DATA__.${key}`);
+
+    // если промиса нет-забираем на клиенте.
+    if ( ! articles ) {
+      articles = api.articles.fetchAll();
+      this.wait(articles, key);
+    }
+
+    this.set('articles', articles);
   }
 };
 
