@@ -92,9 +92,11 @@ const options = {
   },
   components: {
     tags: require('./components/Tags'),
+    articles: require('./components/Articles'),
   },
   computed: {
     tags: require('./computed/tags'),
+    // так можно описывать вычисляемые свойства декларативно
     fullName() {
       return this.get('firstName') + ' ' + this.get('lastName');
     }
