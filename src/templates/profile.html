@@ -1,5 +1,8 @@
 <div class="profile">
     {{#await profile}}
+    <div class="profile-preview">
+        <p>Loading profile...</p>
+    </div>
     {{then profile}}
     <div class="user-info">
         <div class="container">

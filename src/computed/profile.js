@@ -15,7 +15,7 @@ module.exports = function() {
   } else if (_profile && _profile.username === username) {
     profile = _profile;
   } else if (username) {
-    profile = api.profiles.fetch(username).then(data => (_profile = data.profile, _profile));
+    profile = api.profiles.fetch(username).then(data => (_profile = data.profile));
     this.wait(profile, key);
   }
   return profile;

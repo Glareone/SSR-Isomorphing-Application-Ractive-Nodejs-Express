@@ -3,7 +3,7 @@
     <ul class="pagination">
         {{#each pages as page}}
         <li class-active="isCurrent(page)" class="page-item">
-            <a href="?{{ @shared.route.pathname.join('offset', getOffset(page)) }}" class="page-link">
+            <a href="{{ @shared.route.pathname.join('offset', getOffset(page)) }}" class="page-link">
                 {{ page }}
             </a>
         </li>
