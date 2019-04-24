@@ -40,6 +40,8 @@ Ractive.defaults.lazy = true;
 
 // Ractive.defaults.sanitize позволяет на этапе парсинга шаблонов вырезать небезопасные html-теги.
 Ractive.defaults.sanitize = true;
+// переменная для использования в computed свойствах для получения keychain
+Ractive.defaults.snapshot = '@global.__DATA__';
 
 // Хелпер форматирования дат, добавлен в хелперы
 Ractive.defaults.data.formatDate = require('./helpers/formatDate');
@@ -88,7 +90,11 @@ const options = {
     lastName: 'Kalesnikau',
     articles: [] // информация по статьям, которые мы забираем асинхронно сервером
   },
+  components: {
+    tags: require('./components/Tags'),
+  },
   computed: {
+    tags: require('./computed/tags'),
     fullName() {
       return this.get('firstName') + ' ' + this.get('lastName');
     }
@@ -96,17 +102,23 @@ const options = {
   // все там же импортируем api-сервис и пишем простой запрос на получение списка статей в хуке oninit и,
   // внимание, добавляем «обещание» в «ожидание»
   oninit () {
-    const key = 'articlesList';
+    const articlesKey = 'articlesList';
+    const tagsKey = 'tagsList';
     // изменения необходимы для того, чтобы с сервера и с клиента не уходило 2 запроса.
     // Короче говоря, теперь данные будут загружаться на сервере, ожидаться, рендериться во время SSR,
     // приходить в структурированном виде на клиент,
     // идентифицироваться и переиспользоваться без лишних запросов к API и с гидрацией разметки.
-    let articles = this.get(`@global.__DATA__.${key}`);
+    let articles = this.get(`@global.__DATA__.${articlesKey}`);
+    let tags = this.get(`@global.__DATA__.${tagsKey}`);
 
+    if (! tags) {
+      tags = api.tags.fetchAll();
+      this.wait(tags, tagsKey);
+    }
     // если промиса нет-забираем на клиенте.
-    if ( ! articles ) {
+    if (! articles) {
       articles = api.articles.fetchAll();
-      this.wait(articles, key);
+      this.wait(articles, articlesKey);
     }
 
     this.set('articles', articles);

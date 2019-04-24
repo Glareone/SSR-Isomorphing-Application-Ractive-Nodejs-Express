@@ -13,9 +13,9 @@
       "type": "image/png"
     },
     {
-      "src": "img/favicon.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
     }
   ]
 }
