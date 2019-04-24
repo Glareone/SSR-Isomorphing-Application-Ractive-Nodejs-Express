@@ -93,6 +93,7 @@ const options = {
   components: {
     tags: require('./components/Tags'),
     articles: require('./components/Articles'),
+    profile: require('./components/Profile')
   },
   computed: {
     tags: require('./computed/tags'),

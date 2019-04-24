@@ -8,25 +8,25 @@
 {{#with
 @shared.$route.pathname as pathname,
 {delay: 500} as fadeIn,
-{delay: 200} as fadeOut
+{duration: 200} as fadeOut
 }}
-
-<div id="page">
-    {{#if pathname.match('/login')}}
-    <div fade-in="fadeIn">
-        <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
-            <strong>Login</strong>. {{message}}
-        </div>
+<div class="page">
+    {{#if pathname.match('/login') }}
+    <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
+        Login page
     </div>
-    {{elseif pathname.match('/register')}}
+    {{elseif pathname.match('/register') }}
     <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
         Register page
     </div>
     {{elseif pathname.match('/profile/:username/:section?') }}
     <div class="profile-page" fade-in="fadeIn" fade-out="fadeOut">
-        Profile page
+        <profile
+                username="{{ $route.params.username }}"
+                section="{{ $route.params.section }}"
+        />
     </div>
-    {{elseif pathname.match('/')}}
+    {{elseif pathname.match('/') }}
     <div class="home-page" fade-in="fadeIn" fade-out="fadeOut">
         {{>homepage}}
     </div>
@@ -35,6 +35,8 @@
         {{>notfound}}
     </div>
     {{/if}}
+
 </div>
 {{/with}}
+
 {{>footer}}
