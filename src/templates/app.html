@@ -7,6 +7,7 @@
 <!-- shared позволяет передавать объекты между компонентами и шаблонами, в данном случае передает route-->
 {{#with
 @shared.$route.pathname as pathname,
+@shared.$route.params as params,
 {delay: 500} as fadeIn,
 {duration: 200} as fadeOut
 }}
@@ -19,11 +20,11 @@
     <div class="auth-page" fade-in="fadeIn" fade-out="fadeOut">
         Register page
     </div>
-    {{elseif pathname.match('/profile/:username/:section?') }}
+    {{elseif pathname.match('/profile') }}
     <div class="profile-page" fade-in="fadeIn" fade-out="fadeOut">
         <profile
-                username="{{ $route.params.username }}"
-                section="{{ $route.params.section }}"
+                username="{{ params.username }}"
+                section="{{ params.section }}"
         />
     </div>
     {{elseif pathname.match('/') }}

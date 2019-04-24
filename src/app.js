@@ -52,11 +52,6 @@ Ractive.partials.errors = require('./templates/parsed/errors');
 // Если вы ненавидите или боитесь двойного связывания, данная проблема решается в Ractive одной строкой:
 // Ractive.defaults.twoway = false;
 
-// Подключение роутинга для изоморфного приложения
-Ractive.use(require('ractive-page')({
-  meta: require('../config/meta.json')
-}));
-
 // Используем плагин для добавления асинхронной загрузки на сервер и клиент. Для этого заюзаем плагин ractive-ready
 // Весь плагин еще примерно 100 строк кода, который заносит в прототип конструктора Ractive три дополнительных метода:
 // add async operation to "waitings"
@@ -71,6 +66,10 @@ Ractive.use(require('ractive-page')({
 // Отдельно обращаю внимание, что данный подход дает возможность очевидным образом определять какие данные будут
 // участвовать в SSR, а какие нет. Иногда это удобно для оптимизации SSR.
 Ractive.use(require('ractive-ready')());
+// Подключение роутинга для изоморфного приложения
+Ractive.use(require('ractive-page')({
+  meta: require('../config/meta.json')
+}));
 
 const options = {
   el: '#app',
