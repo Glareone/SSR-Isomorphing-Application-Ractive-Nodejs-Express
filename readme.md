@@ -1,3 +1,6 @@
+## Hydration. Hydration and Rehydration types
+More information about Hydration you may find in wiki: [hydration](https://en.wikipedia.org/wiki/Hydration_(web_development))
+
 ### Purposes:
 This codebase was created to demonstrate a fully fledged fullstack application built with Ractive including 
 CRUD operations, authentication, routing, pagination, and more.
